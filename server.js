@@ -9,7 +9,17 @@ const requestListener = (request, response) => {
   if (method === "GET") {
     response.end("<h1>You're doing GET!</h1>");
   } else if (method === "POST") {
-    response.end("<h1>You're doing POST!</h1>");
+    let body = [];
+
+    request.on("data", (chunk) => {
+      body.push(chunk);
+    });
+
+    request.on("end", () => {
+      body = Buffer.concat(body).toString();
+      const { name } = JSON.parse(body);
+      response.end(`<h1>Hello, ${name}!</h1>`);
+    });
   } else if (method === "PUT") {
     response.end("<h1>You're doing PUT!</h1>");
   } else if (method === "DELETE") {
