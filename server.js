@@ -9,15 +9,26 @@ const requestListener = (request, response) => {
   if (url === "/") {
     if (method === "GET") {
       response.statusCode = 200;
-      response.end("<h1>Welcome to Homepage</h1>");
+      //response.end("<h1>Welcome to Homepage</h1>");
+      response.end(JSON.stringify({ message: `Welcome to Homepage` }));
     } else {
       response.statusCode = 400;
-      response.end(`<h1>This page can't access with ${method} request</h1>`);
+      //response.end(`<h1>This page can't access with ${method} request</h1>`);
+      response.end(
+        JSON.stringify({
+          message: `This page can't access with ${method} request`,
+        })
+      );
     }
   } else if (url === "/about") {
     if (method === "GET") {
       response.statusCode = 200;
-      response.end("<h1>Welcome to About Page</h1>");
+      //response.end("<h1>Welcome to About Page</h1>");
+      response.end(
+        JSON.stringify({
+          message: `Welcome to About Page`,
+        })
+      );
     } else if (method === "POST") {
       let body = [];
 
@@ -29,15 +40,30 @@ const requestListener = (request, response) => {
         body = Buffer.concat(body).toString();
         const { name } = JSON.parse(body);
         response.statusCode = 200;
-        response.end(`<h1>Hello, ${name}! This is About Page</h1>`);
+        //response.end(`<h1>Hello, ${name}! This is About Page</h1>`);
+        response.end(
+          JSON.stringify({
+            message: `Hello, ${name}! This is About Page`,
+          })
+        );
       });
     } else {
       response.statusCode = 400;
-      response.end(`<h1>This page can't access with ${method} request</h1>`);
+      //response.end(`<h1>This page can't access with ${method} request</h1>`);
+      response.end(
+        JSON.stringify({
+          message: `This page can't access with ${method} request`,
+        })
+      );
     }
   } else {
     response.statusCode = 400;
-    response.end("<h1>Halaman tidak ditemukan!</h1>");
+    // response.end("<h1>Page can't found!</h1>");
+    response.end(
+      JSON.stringify({
+        message: `Page can't found!`,
+      })
+    );
   }
 
   // if (method === "GET") {
